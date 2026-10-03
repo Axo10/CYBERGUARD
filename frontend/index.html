@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERGUARD | AI-Powered Cyber Defence Operations Center</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Operational Header -->
+  <header class="cyber-header">
+    <div class="brand-wrapper">
+      <div class="brand-logo">CG</div>
+      <div>
+        <div class="brand-title">CYBERGUARD</div>
+        <div class="brand-subtitle">AI-Powered Threat, Phishing &amp; Impersonation Defence</div>
+      </div>
+    </div>
+
+    <div class="header-status-group">
+      <div class="status-pill">
+        <div class="status-dot"></div>
+        <span>RADAR ENGINE ACTIVE</span>
+      </div>
+      <div class="clock-display" id="soc-clock">UTC 00:00:00</div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="cyber-nav">
+    <button class="nav-tab-btn active" id="nav-btn-dashboard" onclick="switchMainTab('dashboard')">
+      📊 SOC Command Dashboard
+    </button>
+    <button class="nav-tab-btn" id="nav-btn-analyzer" onclick="switchMainTab('analyzer')">
+      🔬 Threat Inspector Workbench
+    </button>
+    <button class="nav-tab-btn" id="nav-btn-incidents" onclick="switchMainTab('incidents')">
+      ⚡ Incident Triage &amp; Playbooks
+    </button>
+    <button class="nav-tab-btn" id="nav-btn-scenarios" onclick="switchMainTab('scenarios')">
+      🎯 Demo Scenarios (1-Click Test)
+    </button>
+  </nav>
+
+  <!-- Main View Container -->
+  <main class="cyber-container">
+
+    <!-- VIEW 1: SOC COMMAND DASHBOARD -->
+    <section class="view-section active" id="view-dashboard">
+      <!-- KPI Metric Cards Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">Total Events Analyzed</div>
+          <div class="kpi-value" id="kpi-total-events">14,920</div>
+          <div class="kpi-detail">Across Email, Web, Auth, Media</div>
+        </div>
+        <div class="kpi-card kpi-critical">
+          <div class="kpi-title">Threats Intercepted</div>
+          <div class="kpi-value" id="kpi-threats-detected">148</div>
+          <div class="kpi-detail">Near Real-Time Containment</div>
+        </div>
+        <div class="kpi-card kpi-high">
+          <div class="kpi-title">Phishing Attempts</div>
+          <div class="kpi-value" id="kpi-phishing">62</div>
+          <div class="kpi-detail">Email, SMS &amp; Quishing</div>
+        </div>
+        <div class="kpi-card kpi-warning">
+          <div class="kpi-title">Impersonation Vectors</div>
+          <div class="kpi-value" id="kpi-impersonation">38</div>
+          <div class="kpi-detail">C-Suite &amp; Authority Spoofs</div>
+        </div>
+        <div class="kpi-card kpi-critical">
+          <div class="kpi-title">Deepfakes Flagged</div>
+          <div class="kpi-value" id="kpi-deepfakes">19</div>
+          <div class="kpi-detail">Synthetic Audio &amp; Video Media</div>
+        </div>
+        <div class="kpi-card kpi-safe">
+          <div class="kpi-title">Account Takeovers Blocked</div>
+          <div class="kpi-value" id="kpi-ato">29</div>
+          <div class="kpi-detail">Spraying &amp; Impossible Travel</div>
+        </div>
+      </div>
+
+      <!-- 2-Column Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Left: Risk Level Distribution & Core Architecture -->
+        <div>
+          <div class="hud-panel">
+            <div class="panel-header">
+              <div class="panel-title">🛡️ Threat Risk Tier Distribution</div>
+              <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">0 - 100 CALIBRATED SCALE</span>
+            </div>
+            
+            <div class="risk-meter-container">
+              <div class="risk-tier-row">
+                <span class="risk-tier-label" style="color:var(--critical-red);">CRITICAL (90+)</span>
+                <div class="risk-progress-bar">
+                  <div class="risk-fill critical" id="meter-fill-critical" style="width: 25%;"></div>
+                </div>
+                <span class="risk-tier-count" id="meter-count-critical">3 (25%)</span>
+              </div>
+
+              <div class="risk-tier-row">
+                <span class="risk-tier-label" style="color:var(--high-orange);">HIGH (70-89)</span>
+                <div class="risk-progress-bar">
+                  <div class="risk-fill high" id="meter-fill-high" style="width: 35%;"></div>
+                </div>
+                <span class="risk-tier-count" id="meter-count-high">4 (35%)</span>
+              </div>
+
+              <div class="risk-tier-row">
+                <span class="risk-tier-label" style="color:var(--med-yellow);">MEDIUM (40-69)</span>
+                <div class="risk-progress-bar">
+                  <div class="risk-fill medium" id="meter-fill-medium" style="width: 20%;"></div>
+                </div>
+                <span class="risk-tier-count" id="meter-count-medium">2 (20%)</span>
+              </div>
+
+              <div class="risk-tier-row">
+                <span class="risk-tier-label" style="color:var(--low-blue);">LOW (20-39)</span>
+                <div class="risk-progress-bar">
+                  <div class="risk-fill low" id="meter-fill-low" style="width: 10%;"></div>
+                </div>
+                <span class="risk-tier-count" id="meter-count-low">1 (10%)</span>
+              </div>
+
+              <div class="risk-tier-row">
+                <span class="risk-tier-label" style="color:var(--safe-green);">SAFE (0-19)</span>
+                <div class="risk-progress-bar">
+                  <div class="risk-fill safe" id="meter-fill-safe" style="width: 10%;"></div>
+                </div>
+                <span class="risk-tier-count" id="meter-count-safe">1 (10%)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hud-panel">
+            <div class="panel-header">
+              <div class="panel-title">⚙️ Cyber Defense Architecture Modules</div>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.7;">
+              <p>• <b>Multi-Source Threat Analysis:</b> Normalizes and inspects unstructured email text, SMS, URLs, image/audio forensic metrics, and authentication logs.</p>
+              <p>• <b>Explainable AI (XAI) Synthesis:</b> Delivers plain-English situational reasoning instead of opaque black-box verdicts.</p>
+              <p>• <b>MITRE ATT&amp;CK Mapping:</b> Correlates active events to adversary techniques (T1566, T1656, T1110, T1078, T1048).</p>
+              <p>• <b>Autonomous Response Playbooks:</b> One-click containment via proxy sinkholes, email gateway quashing, session invalidation, and ERP payment holds.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Attack Timeline Feed -->
+        <div>
+          <div class="hud-panel">
+            <div class="panel-header">
+              <div class="panel-title">⚡ Live Attack Timeline &amp; Stream</div>
+              <button class="btn-secondary" onclick="loadDashboardStats()" style="padding:0.25rem 0.5rem; font-size:0.75rem;">↻ Refresh</button>
+            </div>
+            <div class="timeline-feed" id="timeline-feed">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: THREAT INSPECTOR WORKBENCH -->
+    <section class="view-section" id="view-analyzer">
+      <div class="analyzer-workbench">
+        <!-- Left Column: Input Forms with Subtabs -->
+        <div class="hud-panel">
+          <div class="analyzer-subtabs">
+            <button class="subtab-btn active" id="subtab-btn-phishing" onclick="switchSubtab('phishing')">
+              📧 Phishing &amp; Quishing
+            </button>
+            <button class="subtab-btn" id="subtab-btn-url" onclick="switchSubtab('url')">
+              🔗 URL &amp; Typosquatting
+            </button>
+            <button class="subtab-btn" id="subtab-btn-impersonation" onclick="switchSubtab('impersonation')">
+              🎭 Impersonation &amp; Deepfake
+            </button>
+            <button class="subtab-btn" id="subtab-btn-logs" onclick="switchSubtab('logs')">
+              💻 Technical Logs &amp; ATO
+            </button>
+          </div>
+
+          <!-- 1. Phishing Form Panel -->
+          <div class="analyzer-form-panel" id="analyzer-panel-phishing">
+            <form id="form-phishing">
+              <div class="form-group">
+                <label>Message Channel</label>
+                <select class="cyber-select" id="phish-type">
+                  <option value="email">Corporate Email</option>
+                  <option value="sms">SMS / Mobile Message (Smishing)</option>
+                  <option value="social">Social Media / Messaging App</option>
+                  <option value="quishing">QR-Code Phishing (Quishing)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Sender Address / Display Name</label>
+                <input type="text" class="cyber-input" id="phish-sender" placeholder="e.g. IT Support &lt;helpdesk@security-update.xyz&gt;">
+              </div>
+              <div class="form-group">
+                <label>Subject Line</label>
+                <input type="text" class="cyber-input" id="phish-subject" placeholder="e.g. CRITICAL: Account Password Expiring in 24 Hours">
+              </div>
+              <div class="form-group">
+                <label>Message Content / Body</label>
+                <textarea class="cyber-textarea" id="phish-text" rows="5" placeholder="Paste suspicious message text, embedded links, or QR code authentication prompts here..."></textarea>
+              </div>
+              <button type="submit" class="btn-primary">
+                🛡️ Run AI Phishing Analysis
+              </button>
+            </form>
+          </div>
+
+          <!-- 2. URL Form Panel -->
+          <div class="analyzer-form-panel" id="analyzer-panel-url" style="display:none;">
+            <form id="form-url">
+              <div class="form-group">
+                <label>Target URL / Hostname</label>
+                <input type="text" class="cyber-input" id="url-input" placeholder="e.g. https://paypa1-verification.xyz/secure/login/auth" required>
+              </div>
+              <p style="font-size:0.75rem; color:var(--text-dim); margin-bottom:1rem;">
+                Evaluates Levenshtein typosquatting distance against popular enterprise &amp; banking brands, checks Punycode IDN homoglyphs, calculates Shannon domain entropy, and inspects deceptive credential paths.
+              </p>
+              <button type="submit" class="btn-primary">
+                🔍 Run URL Radar Analysis
+              </button>
+            </form>
+          </div>
+
+          <!-- 3. Impersonation & Deepfake Form Panel -->
+          <div class="analyzer-form-panel" id="analyzer-panel-impersonation" style="display:none;">
+            <form id="form-impersonation">
+              <div class="form-group">
+                <label>Analysis Mode</label>
+                <select class="cyber-select" id="imp-mode-select" onchange="
+                  if(this.value === 'deepfake') {
+                    document.getElementById('imp-text-controls').style.display='none';
+                    document.getElementById('imp-deepfake-controls').style.display='block';
+                  } else {
+                    document.getElementById('imp-text-controls').style.display='block';
+                    document.getElementById('imp-deepfake-controls').style.display='none';
+                  }
+                ">
+                  <option value="text">Executive Masquerading &amp; BEC (Text Pretext)</option>
+                  <option value="deepfake">Deepfake &amp; Synthetic Media Forensic Lab</option>
+                </select>
+              </div>
+
+              <!-- Text Controls -->
+              <div id="imp-text-controls">
+                <div class="form-group">
+                  <label>Claimed Identity</label>
+                  <input type="text" class="cyber-input" id="imp-identity" placeholder="e.g. Satya Nadella or Tim Cook">
+                </div>
+                <div class="form-group">
+                  <label>Claimed Organization Role</label>
+                  <select class="cyber-select" id="imp-role">
+                    <option value="CEO">Chief Executive Officer (CEO)</option>
+                    <option value="CFO">Chief Financial Officer (CFO)</option>
+                    <option value="GOVT">Government / Tax / Law Enforcement Official</option>
+                    <option value="UNIVERSITY">University Authority / Dean</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Communication Content</label>
+                  <textarea class="cyber-textarea" id="imp-text" rows="4" placeholder="e.g. I am in a confidential meeting and cannot take calls. Send $85,000 wire transfer immediately..."></textarea>
+                </div>
+              </div>
+
+              <!-- Deepfake Media Controls -->
+              <div id="imp-deepfake-controls" style="display:none;">
+                <div class="form-group">
+                  <label>Multimedia Type</label>
+                  <select class="cyber-select" id="df-media-type" onchange="switchDeepfakeMediaType(this.value)">
+                    <option value="audio">Voice Recording / Audio Stream (Voice Cloning)</option>
+                    <option value="image">Still Image / Facial Identification</option>
+                    <option value="video">Video Call / Stream Inspection</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Media Filename / Identifier</label>
+                  <input type="text" class="cyber-input" id="df-filename" value="cfo_urgent_wire_authorization_call.wav">
+                </div>
+
+                <!-- Audio Controls -->
+                <div id="df-audio-controls">
+                  <div class="form-group">
+                    <label>Acoustic Spectral Flatness (0.0 = Organic, 1.0 = Neural Vocoder)</label>
+                    <input type="range" min="0" max="1" step="0.01" value="0.88" class="cyber-input" id="df-spectral-flatness" oninput="this.nextElementSibling.value = this.value">
+                    <output style="font-family:var(--font-mono); font-size:0.8rem; color:var(--cyan-glow);">0.88</output>
+                  </div>
+                  <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+                    <input type="checkbox" id="df-breath-anomaly" checked>
+                    <label for="df-breath-anomaly" style="margin-bottom:0; cursor:pointer;">Unnatural Absence of Biological Inhalation / Breath Pauses</label>
+                  </div>
+                  <div class="form-group">
+                    <label>High-Frequency Cutoff (kHz)</label>
+                    <input type="number" step="0.5" class="cyber-input" id="df-frequency-cutoff" value="7.5">
+                  </div>
+                </div>
+
+                <!-- Visual Controls -->
+                <div id="df-visual-controls" style="display:none;">
+                  <div class="form-group">
+                    <label>Facial Boundary Warping Index (0.0 to 1.0)</label>
+                    <input type="range" min="0" max="1" step="0.01" value="0.90" class="cyber-input" id="df-boundary-artifacts" oninput="this.nextElementSibling.value = this.value">
+                    <output style="font-family:var(--font-mono); font-size:0.8rem; color:var(--cyan-glow);">0.90</output>
+                  </div>
+                  <div class="form-group">
+                    <label>Corneal Reflection Consistency (1.0 = Natural, 0.0 = Mismatch)</label>
+                    <input type="range" min="0" max="1" step="0.01" value="0.15" class="cyber-input" id="df-eye-reflection" oninput="this.nextElementSibling.value = this.value">
+                    <output style="font-family:var(--font-mono); font-size:0.8rem; color:var(--cyan-glow);">0.15</output>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary" style="margin-top:1rem;">
+                🎭 Inspect Identity &amp; Authenticity
+              </button>
+            </form>
+          </div>
+
+          <!-- 4. Logs Form Panel -->
+          <div class="analyzer-form-panel" id="analyzer-panel-logs" style="display:none;">
+            <form id="form-logs">
+              <div class="form-group">
+                <label>User Identifier</label>
+                <input type="text" class="cyber-input" id="log-user" value="r.chen@enterprise.internal">
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="form-group">
+                  <label>Source IP Address</label>
+                  <input type="text" class="cyber-input" id="log-ip" value="185.220.101.42">
+                </div>
+                <div class="form-group">
+                  <label>Current Geolocation</label>
+                  <input type="text" class="cyber-input" id="log-location" value="London, UK (Previous: Tokyo, Japan 15 min ago)">
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="form-group">
+                  <label>Failed Login Attempts</label>
+                  <input type="number" class="cyber-input" id="log-failed-attempts" value="19">
+                </div>
+                <div class="form-group">
+                  <label>Calculated Travel Velocity (km/h)</label>
+                  <input type="number" class="cyber-input" id="log-velocity" value="3840">
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="form-group">
+                  <label>Egress Volume (MB)</label>
+                  <input type="number" step="0.1" class="cyber-input" id="log-egress-mb" value="12.4">
+                </div>
+                <div class="form-group">
+                  <label>API Rate (Req/Sec)</label>
+                  <input type="number" class="cyber-input" id="log-api-rate" value="42">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Device Trust Status</label>
+                <input type="text" class="cyber-input" id="log-device-status" value="Untrusted / Unknown Linux Tor Exit Node">
+              </div>
+              <button type="submit" class="btn-primary">
+                💻 Evaluate Technical Security Logs
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Result Card -->
+        <div class="result-card" id="analysis-result-container">
+          <div class="result-placeholder">
+            <div style="font-size:3rem; margin-bottom:1rem; opacity:0.6;">🛡️</div>
+            <div style="font-size:1.1rem; font-weight:700; color:#ffffff; margin-bottom:0.5rem;">
+              Threat Inspector Ready
+            </div>
+            <div style="max-width:320px; font-size:0.85rem;">
+              Select an analyzer tab on the left, enter data or click <b style="color:var(--cyan-glow);">Demo Scenarios</b> above to immediately inspect threat severity, Explainable AI reasoning, MITRE mapping, and response playbooks.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: INCIDENT TRIAGE & PLAYBOOKS -->
+    <section class="view-section" id="view-incidents">
+      <div class="hud-panel">
+        <div class="panel-header">
+          <div class="panel-title">📋 Active Incident Ledger &amp; Containment Hub</div>
+          <div style="display:flex; gap:0.5rem;">
+            <select class="cyber-select" id="filter-incident-status" onchange="loadIncidentsTable()" style="width:auto; padding:0.4rem 0.75rem;">
+              <option value="">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Mitigated">Mitigated</option>
+            </select>
+            <select class="cyber-select" id="filter-incident-level" onchange="loadIncidentsTable()" style="width:auto; padding:0.4rem 0.75rem;">
+              <option value="">All Risk Tiers</option>
+              <option value="CRITICAL">Critical</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+              <option value="SAFE">Safe</option>
+            </select>
+            <button class="btn-secondary" onclick="resetIncidentsToDefault()" title="Reset to simulated demo incidents">
+              🔄 Reset Demo
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="cyber-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Time (UTC)</th>
+                <th>Threat &amp; Category</th>
+                <th>Source / Origin</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="incidents-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: DEMO SCENARIOS -->
+    <section class="view-section" id="view-scenarios">
+      <div class="hud-panel" style="margin-bottom:1rem;">
+        <div class="panel-header">
+          <div class="panel-title">🎯 Rapid 1-Click Evaluation Scenarios</div>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted);">
+          These preloaded scenarios demonstrate each mandatory deliverable specified in the <b>CYBERGUARD</b> problem statement. Clicking <b>"Load &amp; Test Scenario"</b> will automatically populate the data, execute AI feature extraction, generate Explainable AI reasoning, map MITRE tactics, and display response playbooks.
+        </p>
+      </div>
+
+      <div class="scenarios-grid" id="scenarios-grid">
+        <!-- Dynamically populated by incidents.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mitigation Execution Modal -->
+  <div class="modal-overlay" id="mitigation-modal">
+    <div class="modal-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-subtle);">
+        <div style="font-weight:700; color:#ffffff; font-size:1.1rem;">
+          ⚡ Incident Containment Playbook
+        </div>
+        <button onclick="closeMitigationModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.25rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:0.75rem; color:var(--cyan-glow); font-family:var(--font-mono); margin-bottom:0.25rem;" id="modal-inc-id">INC-0000</div>
+        <div style="font-size:1rem; font-weight:700; color:#ffffff; margin-bottom:0.5rem;" id="modal-inc-title">Incident Title</div>
+        <div style="font-size:0.8rem; color:var(--text-muted); background:rgba(0,0,0,0.3); padding:0.75rem; border-radius:6px;" id="modal-inc-explanation">Explanation text</div>
+      </div>
+
+      <div class="form-group">
+        <label>Selected Mitigation Playbook</label>
+        <select class="cyber-select" id="modal-action-select">
+          <option value="QUARANTINE_EMAIL">Quarantine Message in Gateway (Purge from Inboxes)</option>
+          <option value="BLOCK_URL_PROXY">Block Destination URL &amp; Sinkhole DNS at Perimeter</option>
+          <option value="REVOKE_SESSION">Revoke User JWT Sessions &amp; Enforce Step-up MFA</option>
+          <option value="BLOCK_IP_WAF">Shun Attacker IP on Edge WAF / Firewall (72h Ban)</option>
+          <option value="HALT_FINANCIAL_RELEASE">Freeze ERP Financial Disbursement &amp; Wire Batch</option>
+          <option value="CHALLENGE_VOICE_MFA">Biometric Step-Up Deepfake Challenge &amp; Call Terminate</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Authorizing Analyst</label>
+        <input type="text" class="cyber-input" id="modal-analyst-name" value="SecOps Lead Analyst">
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+        <button class="btn-secondary" onclick="closeMitigationModal()">Cancel</button>
+        <button class="btn-primary" onclick="confirmExecuteMitigation()" style="background:linear-gradient(135deg, #ef4444, #f97316); color:#ffffff;">
+          ⚡ Execute Playbook
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/analyzers.js"></script>
+  <script src="js/incidents.js"></script>
+</body>
+</html>
